@@ -1,0 +1,104 @@
+/* General Styles */
+body.bg-image {
+    background-size: cover; /* Đảm bảo hình nền phủ toàn bộ màn hình */
+    background-position: center; /* Căn giữa hình nền */
+    background-repeat: no-repeat; /* Không lặp hình nền */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+    backdrop-filter: blur(2px); /* Làm mờ toàn bộ nền */
+    min-height: 100vh; /* Đảm bảo chiếm toàn bộ chiều cao */
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.confirm-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+    backdrop-filter: blur(5px); /* Làm mờ vùng chứa xác nhận */
+}
+
+.booking-summary {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #007bff;
+}
+
+.booking-summary h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+}
+
+.booking-summary p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+.btn-lg {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    background-color: #28a745;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    background-color: #dc3545;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .confirm-container {
+        max-width: 90%; /* Giảm kích thước trên mobile */
+        padding: 15px;
+    }
+
+    .booking-summary {
+        padding: 10px;
+    }
+
+    .btn-lg {
+        padding: 8px 15px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .confirm-container {
+        max-width: 100%; /* Đầy đủ chiều rộng trên màn hình nhỏ */
+        margin: 10px;
+    }
+
+    .booking-summary h3 {
+        font-size: 1.2rem;
+    }
+
+    .booking-summary p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

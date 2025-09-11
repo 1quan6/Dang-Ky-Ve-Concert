@@ -1,0 +1,32 @@
+
+        <!DOCTYPE html>
+        <html lang="vi">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Sửa Sự kiện</title>
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        </head>
+        <body>
+            <div class="form-container">
+                <h2>Sửa Sự kiện</h2>
+                <form method="post" enctype="multipart/form-data">
+                    <input type="text" name="name" placeholder="Tên sự kiện" value="{{ event.name }}" required>
+                    <input type="date" name="date" value="{{ event.date.strftime('%Y-%m-%d') }}" required>
+                    <input type="text" name="location" placeholder="Địa điểm" value="{{ event.location }}" required>
+                    <textarea name="description" placeholder="Mô tả sự kiện">{{ event.description }}</textarea>
+                    <input type="number" name="total_tickets" placeholder="Tổng số vé" value="{{ event.total_tickets }}" required>
+                    <label for="event_image">Ảnh sự kiện hiện tại:</label>
+                    {% if event.image_filename %}
+                        <img src="{{ url_for('uploaded_file', filename=event.image_filename) }}" alt="Ảnh sự kiện" style="max-width: 200px; display: block; margin-bottom: 10px;">
+                    {% else %}
+                        <p>Chưa có ảnh</p>
+                    {% endif %}
+                    <label for="new_event_image">Cập nhật ảnh sự kiện:</label>
+                    <input type="file" name="event_image" id="new_event_image" accept="image/*">
+                    <button type="submit">Cập nhật Sự kiện</button>
+                </form>
+            </div>
+        </body>
+        </html>
+        

@@ -1,0 +1,26 @@
+
+        <!DOCTYPE html>
+        <html lang="vi">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Thêm Sự kiện</title>
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        </head>
+        <body>
+            <div class="form-container">
+                <h2>Thêm Sự kiện Mới</h2>
+                <form method="post" enctype="multipart/form-data">
+                    <input type="text" name="name" placeholder="Tên sự kiện" required>
+                    <input type="date" name="date" required>
+                    <input type="text" name="location" placeholder="Địa điểm" required>
+                    <textarea name="description" placeholder="Mô tả sự kiện"></textarea>
+                    <input type="number" name="total_tickets" placeholder="Tổng số vé" required>
+                    <label for="event_image">Ảnh sự kiện:</label>
+                    <input type="file" name="event_image" id="event_image" accept="image/*">
+                    <button type="submit">Thêm Sự kiện</button>
+                </form>
+            </div>
+        </body>
+        </html>
+        

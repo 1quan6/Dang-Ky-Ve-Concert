@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký - TicketBox DNU</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .register-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .btn-block {
+            padding: 0.75rem;
+        }
+        @media (max-width: 576px) {
+            .register-container {
+                padding: 10px;
+            }
+            .card {
+                margin: 0 10px;
+            }
+            .form-group label {
+                font-size: 0.9rem;
+            }
+            .form-control {
+                font-size: 0.9rem;
+                padding: 0.5rem;
+            }
+            .btn-block {
+                font-size: 0.9rem;
+                padding: 0.6rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Đăng ký tài khoản</h2>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form method="post" action="{{ url_for('register') }}">
+                    <div class="form-group">
+                        <label for="fullname">Họ và tên:</label>
+                        <input type="text" class="form-control" id="fullname" name="fullname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Ngày sinh:</label>
+                        <input type="date" class="form-control" id="dob" name="dob">
+                    </div>
+                    <div class="form-group">
+                        <label for="student_class">Lớp:</label>
+                        <input type="text" class="form-control" id="student_class" name="student_class">
+                    </div>
+                    <div class="form-group">
+                        <label for="faculty">Khoa:</label>
+                        <input type="text" class="form-control" id="faculty" name="faculty">
+                    </div>
+                    <div class="form-group">
+                        <label for="course">Khóa học:</label>
+                        <input type="text" class="form-control" id="course" name="course">
+                    </div>
+                    <div class="form-group">
+                        <label for="cccd">Số CCCD:</label>
+                        <input type="text" class="form-control" id="cccd" name="cccd">
+                    </div>
+                    <div class="form-group">
+                        <label for="student_id">Mã sinh viên:</label>
+                        <input type="text" class="form-control" id="student_id" name="student_id">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại:</label>
+                        <input type="tel" class="form-control" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mật khẩu:</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Xác nhận mật khẩu:</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="security_question">Câu hỏi bảo mật:</label>
+                        <select class="form-control" id="security_question" name="security_question" required>
+                            <option value="">Chọn câu hỏi bảo mật</option>
+                            {% for question in security_questions %}
+                                <option value="{{ question }}">{{ question }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="security_answer">Câu trả lời bảo mật:</label>
+                        <input type="text" class="form-control" id="security_answer" name="security_answer" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Đăng ký</button>
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('login') }}">Đã có tài khoản? Đăng nhập</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const cccd = document.getElementById('cccd').value;
+            const studentId = document.getElementById('student_id').value;
+            const securityAnswer = document.getElementById('security_answer').value;
+
+            if (password !== confirmPassword) {
+                alert('Mật khẩu và xác nhận mật khẩu không khớp.');
+                e.preventDefault();
+            }
+            if (password.length < 8 || !/[A-Z]/.test(password) || !/[0-9]/.test(password) || !/[^A-Za-z0-9]/.test(password)) {
+                alert('Mật khẩu phải dài ít nhất 8 ký tự, chứa chữ hoa, số và ký tự đặc biệt.');
+                e.preventDefault();
+            }
+            if (!cccd && !studentId) {
+                alert('Vui lòng nhập số CCCD hoặc mã sinh viên.');
+                e.preventDefault();
+            }
+            if (cccd && (!/^\d{12}$/.test(cccd))) {
+                alert('Số CCCD phải là 12 chữ số.');
+                e.preventDefault();
+            }
+            if (!securityAnswer.trim()) {
+                alert('Vui lòng nhập câu trả lời bảo mật.');
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

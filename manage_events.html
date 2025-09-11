@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sự kiện - TicketBox DNU</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/manage_event.css') }}">
+</head>
+<body>
+    <header class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-left">
+                <ul class="navbar-nav navbar-taskbar">
+                    {% if current_user.role == 'admin' %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for('admin_dashboard') }}">
+                                <i class="fas fa-chart-line"></i> Trang chủ
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for('doan_truong_dashboard') }}">
+                                <i class="fas fa-chart-line"></i> Trang chủ
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('manage_events') }}">
+                            <i class="fas fa-calendar-alt"></i> Quản lý sự kiện
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('manage_tickets') }}">
+                            <i class="fas fa-ticket-alt"></i> Quản lý vé
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('manage_users') }}">
+                            <i class="fas fa-users"></i> Quản lý người dùng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('qr_scan') }}">
+                            <i class="fas fa-qrcode"></i> Quét mã QR
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-right ml-auto">
+                <ul class="navbar-nav navbar-taskbar">
+                    <li class="nav-item">
+                        <a class="nav-link btn-outline" href="{{ url_for('logout') }}">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                        </a>
+                    </li>
+                    <li class="nav-item language-selector">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="VN" class="flag">
+                        <span class="arrow">&#9662;</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="table-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flashes">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <h2>Quản lý sự kiện</h2>
+        <a href="{{ url_for('add_event') }}" class="btn btn-add">Thêm sự kiện mới</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên sự kiện</th>
+                    <th>Ngày</th>
+                    <th>Địa điểm</th>
+                    <th>Mô tả</th>
+                    <th>Tổng vé</th>
+                    <th>Vé còn lại</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                    <tr>
+                        <td>{{ event.name }}</td>
+                        <td>{{ event.date.strftime('%d/%m/%Y') }}</td>
+                        <td>{{ event.location }}</td>
+                        <td>{{ event.description or 'Không có mô tả' }}</td>
+                        <td>{{ event.total_tickets }}</td>
+                        <td>{{ event.available_tickets }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_event', event_id=event.id) }}" class="btn btn-edit">Chỉnh sửa</a>
+                            <form action="{{ url_for('delete_event', event_id=event.id) }}" method="post" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sự kiện này?');">
+                                <button type="submit" class="btn btn-delete">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+    <footer class="event-contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>📞 Thông tin liên hệ nhà cung cấp sự kiện</h3>
+                <p><strong>Tên đơn vị:</strong> DNU Event Management</p>
+                <p><strong>Điện thoại:</strong> <a href="tel:0961595599">096 159 55 99</a></p>
+                <p><strong>Email:</strong> <a href="mailto:dnu@dainam.edu.vn">dnu@dainam.edu.vn</a></p>
+                <p><strong>Địa chỉ:</strong> Số 1 Phố Xốm, Phú Lãm, Hà Đông, Hà Nội, Hanoi, Vietnam</p>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/DAINAM.EDU.VN" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/daihocdainam/" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@dainamuni" class="tiktok"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flashContainer = document.querySelector('.flashes');
+            if (flashContainer) {
+                setTimeout(() => {
+                    flashContainer.classList.add('fade-out');
+                    flashContainer.addEventListener('transitionend', () => {
+                        flashContainer.style.display = 'none';
+                    });
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

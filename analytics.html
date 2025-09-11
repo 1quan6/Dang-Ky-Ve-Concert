@@ -1,0 +1,78 @@
+
+        <!DOCTYPE html>
+        <html lang="vi">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Thống kê</title>
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        </head>
+        <body>
+            <header class="main-header">
+                <div class="header-content container">
+                    <div class="logo">
+                        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="TicketBox Logo">
+                    </div>
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="{{ url_for('admin_dashboard') }}">Quản lý sự kiện</a></li>
+                            <li><a href="{{ url_for('analytics') }}" class="active">Thống kê</a></li>
+                            <li><a href="{{ url_for('manage_tickets') }}" class="active">Quản lý vé</a></li>
+                            <li><a href="{{ url_for('manage_users') }}" class="list-group-item list-group-item-action">
+    <i class="fas fa-users"></i> Quản lý người dùng</a></li>
+                            <li><a href="{{ url_for('qr_scan') }}">Quét QR</a></li>
+                            <li><a href="{{ url_for('logout') }}">Đăng xuất</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <main class="container">
+                <h1>Thống kê Tổng quan</h1>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Tổng số người dùng</h3>
+                        <p>{{ total_users }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Tổng số vé đã bán</h3>
+                        <p>{{ total_tickets }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Tổng số sự kiện</h3>
+                        <p>{{ total_events }}</p>
+                    </div>
+                </div>
+
+                <div class="charts-container">
+                    <div class="chart">
+                        <h3>Thống kê vé các sự kiện</h3>
+                        <div class="chart-content">
+                            {% for event in event_stats %}
+                            <p><strong>{{ event.name }}:</strong> Đã bán {{ event.total_tickets - event.available_tickets }} / Tổng {{ event.total_tickets }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="chart">
+                        <h3>Thống kê người dùng theo Khoa</h3>
+                        <div class="chart-content">
+                            {% for faculty, count in faculty_stats %}
+                            <p><strong>{{ faculty }}:</strong> {{ count }} người dùng</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="chart">
+                        <h3>Thống kê vé theo Khoa</h3>
+                        <div class="chart-content">
+                            {% for faculty, count in faculty_ticket_stats %}
+                            <p><strong>{{ faculty }}:</strong> {{ count }} vé</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </body>
+        </html>
+        

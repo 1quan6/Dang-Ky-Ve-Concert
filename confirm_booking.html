@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận đặt vé</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/confirm_booking.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-image" style="background-image: url('{{ event.image_url if event.image_url else "https://cdn2.tuoitre.vn/thumb_w/640/2022/8/20/quoc-khanh-16609612799611038720896.png" }}');">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="confirm-container p-4 bg-white bg-opacity-75 rounded shadow-lg" style="backdrop-filter: blur(5px);">
+            <h2 class="text-center mb-4 text-primary">Xác nhận đặt vé</h2>
+            
+            <div class="booking-summary mb-4">
+                <h3 class="mb-3 text-info">Thông tin sự kiện</h3>
+                <p class="mb-2"><strong>Tên sự kiện:</strong> {{ event.name }}</p>
+                <p class="mb-2"><strong>Ngày:</strong> {{ event.date.strftime('%d/%m/%Y') }}</p>
+                <p class="mb-2"><strong>Địa điểm:</strong> {{ event.location }}</p>
+            </div>
+
+            <div class="booking-summary mb-4">
+                <h3 class="mb-3 text-info">Thông tin của bạn</h3>
+                <p class="mb-2"><strong>Họ và tên:</strong> {{ current_user.fullname }}</p>
+                <p class="mb-2"><strong>MSSV/CCCD:</strong> {{ current_user.student_id or current_user.cccd }}</p>
+                <p class="mb-2"><strong>Khoa:</strong> {{ current_user.faculty }}</p>
+                <p class="mb-2"><strong>Lớp:</strong> {{ current_user.student_class }}</p>
+                <p class="mb-2"><strong>Email:</strong> {{ current_user.email }}</p>
+            </div>
+
+            <p class="text-center mb-4">Bạn có chắc chắn muốn đặt vé cho sự kiện này không?</p>
+            
+            <div class="d-flex justify-content-center gap-3">
+                <form action="{{ url_for('confirm_booking', event_id=event.id) }}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-success btn-lg">Đồng ý</button>
+                </form>
+                <a href="{{ url_for('student_dashboard') }}" class="btn btn-danger btn-lg">Hủy bỏ</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

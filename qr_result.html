@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả Quét Vé</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/qr_result.css') }}">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="result-container">
+        <img src="{{ url_for('static', filename='images/dainam.jpg') }}" alt="Dai Nam Logo" class="logo" onerror="this.src='https://www.senviet.art/wp-content/uploads/edd/2021/12/dainam.jpg';">
+        <h2 class="text-2xl font-bold text-gray-800">Kết quả Quét Vé</h2>
+
+        <div id="message-container"></div>
+
+        <!-- This is where the ticket status will be dynamically inserted -->
+        <div id="ticket-status-display" class="ticket-status"></div>
+
+        <!-- This is where the user info will be dynamically inserted -->
+        <div id="user-info-container"></div>
+
+        <div class="flex flex-col sm:flex-row justify-center mt-6 space-y-4 sm:space-y-0 sm:space-x-4">
+            <button onclick="simulateScan('valid')" class="btn btn-primary">Vé hợp lệ</button>
+            <button onclick="simulateScan('used')" class="btn btn-secondary">Vé đã sử dụng</button>
+            <button onclick="simulateScan('invalid')" class="btn btn-secondary">Vé không hợp lệ</button>
+            <a href="{{ url_for('qr_scan') }}" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </div>
+
+    <script>
+        // Use a simple object to simulate backend data
+        const mockData = {
+            'valid': {
+                ticket_status: 'Vé hợp lệ',
+                user_info: {
+                    fullname: 'Trần Văn A',
+                    student_id: '123456789',
+                    student_class: 'K65CLC-1',
+                    faculty: 'Khoa Công nghệ thông tin',
+                    email: 'a.tranvan@hust.edu.vn',
+                    event_name: 'Hội thảo Công nghệ 4.0',
+                    event_date: '10/11/2025',
+                    ticket_code: 'ABCD-12345'
+                },
+                message: 'Quét vé thành công!'
+            },
+            'used': {
+                ticket_status: 'Vé đã được sử dụng',
+                user_info: null,
+                message: 'Vé này đã được sử dụng vào lúc 10:30 ngày 10/11/2025.'
+            },
+            'invalid': {
+                ticket_status: 'Vé không hợp lệ hoặc không tồn tại',
+                user_info: null,
+                message: 'Mã vé không hợp lệ. Vui lòng kiểm tra lại.'
+            }
+        };
+
+        function simulateScan(type) {
+            const data = mockData[type];
+            updateUI(data);
+        }
+
+        function updateUI(data) {
+            const statusDisplay = document.getElementById('ticket-status-display');
+            const infoContainer = document.getElementById('user-info-container');
+            const messageContainer = document.getElementById('message-container');
+
+            // Clear previous content
+            statusDisplay.className = 'ticket-status'; // reset classes
+            infoContainer.innerHTML = '';
+            messageContainer.innerHTML = '';
+
+            // Update message box
+            if (data.message) {
+                let messageClass = 'info';
+                if (data.ticket_status === 'Vé hợp lệ') {
+                    messageClass = 'success';
+                } else if (data.ticket_status === 'Vé đã được sử dụng') {
+                    messageClass = 'warning';
+                } else if (data.ticket_status === 'Vé không hợp lệ hoặc không tồn tại') {
+                    messageClass = 'error';
+                }
+                messageContainer.innerHTML = `<div class="message-box ${messageClass}">${data.message}</div>`;
+            }
+
+            // Update ticket status
+            statusDisplay.textContent = `Trạng thái: ${data.ticket_status}`;
+            statusDisplay.classList.add(
+                data.ticket_status === 'Vé hợp lệ' ? 'valid' :
+                data.ticket_status === 'Vé đã được sử dụng' ? 'warning' :
+                'invalid'
+            );
+
+            // Update user info
+            if (data.user_info) {
+                const userInfoCard = `
+                    <div class="user-info-card">
+                        <h3 class="text-xl font-semibold mb-3">Thông tin người dùng</h3>
+                        <p><strong>Họ và tên:</strong> ${data.user_info.fullname}</p>
+                        <p><strong>Mã sinh viên/CCCD:</strong> ${data.user_info.student_id}</p>
+                        <p><strong>Lớp:</strong> ${data.user_info.student_class}</p>
+                        <p><strong>Khoa:</strong> ${data.user_info.faculty}</p>
+                        <p><strong>Email:</strong> ${data.user_info.email}</p>
+                        <h3 class="text-xl font-semibold mt-6 mb-3">Thông tin sự kiện</h3>
+                        <p><strong>Sự kiện:</strong> ${data.user_info.event_name}</p>
+                        <p><strong>Ngày:</strong> ${data.user_info.event_date}</p>
+                        <p><strong>Mã vé:</strong> ${data.user_info.ticket_code}</p>
+                    </div>
+                `;
+                infoContainer.innerHTML = userInfoCard;
+            } else {
+                infoContainer.innerHTML = `<p class="mt-4 text-gray-600">Không tìm thấy thông tin chi tiết.</p>`;
+            }
+        }
+
+        // Initialize with a default state
+        document.addEventListener('DOMContentLoaded', () => {
+            simulateScan('valid');
+        });
+    </script>
+</body>
+</html>

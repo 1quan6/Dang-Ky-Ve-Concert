@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác minh câu hỏi bảo mật - TicketBox DNU</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .verify-security-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-security-container">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Xác minh câu hỏi bảo mật</h2>
+                <p class="text-center">Trả lời câu hỏi bảo mật sau:</p>
+                <p class="text-center font-weight-bold">{{ security_question }}</p>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form method="post" action="{{ url_for('verify_security_answer', user_id=user_id) }}">
+                    <div class="form-group">
+                        <label for="security_answer">Câu trả lời:</label>
+                        <input type="text" class="form-control" id="security_answer" name="security_answer" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Xác minh</button>
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('forgot_password') }}">Quay lại</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const answer = document.getElementById('security_answer').value;
+            if (!answer.trim()) {
+                alert('Vui lòng nhập câu trả lời bảo mật.');
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

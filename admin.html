@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - TicketBox DNU</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <!-- Header with navigation links on the left and account/language on the right -->
+    <header class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-taskbar">
+                <a href="{{ url_for('admin_dashboard') }}" class="btn-outline active">Trang chủ</a>
+                <a href="{{ url_for('manage_events') }}" class="btn-outline">Quản lý Sự kiện</a>
+                <a href="{{ url_for('manage_users') }}" class="btn-outline">Quản lý Người dùng</a>
+                <a href="{{ url_for('manage_tickets') }}" class="btn-outline">Quản lý Vé</a>
+                <a href="{{ url_for('qr_scan') }}" class="btn-outline">Quét QR</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <div class="account-menu">
+                <a href="#" class="my-tickets-btn">
+                    <i class="fas fa-user-cog"></i> Tài khoản
+                </a>
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                </div>
+            </div>
+            <div class="language-selector">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="VN" class="flag">
+                <span class="arrow">&#9662;</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Thống kê tổng quan</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="card">
+            <div class="card-body">
+                <div class="stats-overview d-flex justify-content-around align-items-center mb-4">
+                    <div class="stat-item text-center">
+                        <h3>Tổng người dùng</h3>
+                        <p class="display-4">{{ total_users }}</p>
+                    </div>
+                    <div class="stat-item text-center">
+                        <h3>Tổng sự kiện</h3>
+                        <p class="display-4">{{ total_events }}</p>
+                    </div>
+                    <div class="stat-item text-center">
+                        <h3>Tổng vé</h3>
+                        <p class="display-4">{{ total_tickets }}</p>
+                    </div>
+                </div>
+
+                <h2 class="mt-4">Thống kê sự kiện</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Tên sự kiện</th>
+                                <th>Tổng vé</th>
+                                <th>Vé còn lại</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for event in event_stats %}
+                                <tr>
+                                    <td>{{ event.name }}</td>
+                                    <td>{{ event.total_tickets }}</td>
+                                    <td>{{ event.available_tickets }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="mt-4">Thống kê theo khoa</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Khoa</th>
+                                <th>Số người dùng</th>
+                                <th>Số vé đã đặt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for faculty, user_count in faculty_stats %}
+                                <tr>
+                                    <td>{{ faculty or 'Không xác định' }}</td>
+                                    <td>{{ user_count }}</td>
+                                    <td>
+                                        {% for f, ticket_count in faculty_ticket_stats if f == faculty %}
+                                            {{ ticket_count }}
+                                        {% else %}
+                                            0
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="event-contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>📞 Thông tin liên hệ nhà cung cấp sự kiện</h3>
+                <p><strong>Tên đơn vị:</strong> DNU Event Management</p>
+                <p><strong>Điện thoại:</strong> <a href="tel:0961595599">096 159 55 99</a></p>
+                <p><strong>Email:</strong> <a href="mailto:dnu@dainam.edu.vn">dnu@dainam.edu.vn</a></p>
+                <p><strong>Địa chỉ:</strong> Số 1 Phố Xốm, Phú Lãm, Hà Đông, Hà Nội, Hanoi, Vietnam</p>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/DAINAM.EDU.VN" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/daihocdainam/" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@dainamuni" class="tiktok"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

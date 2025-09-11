@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang sinh viên - TicketBox DNU</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<header class="banner">
+    <div class="hero-image">
+    <img src="https://cdn2.tuoitre.vn/thumb_w/640/2022/8/20/quoc-khanh-16609612799611038720896.png" alt="Event Banner">
+</div>
+</header>
+<header class="navbar">
+    <div class="navbar-left">
+        <div class="logo">
+            <img src="https://cdn.iconscout.com/icon/free/png-256/free-ticket-1855957-1574163.png" alt="TicketBox Logo">
+        </div>
+        <div class="search-box">
+            <i class="fa fa-search"></i>
+            <input type="text" placeholder="Bạn tìm gì hôm nay?">
+            <button>Tìm kiếm</button>
+        </div>
+    </div>
+    <div class="navbar-right">
+        <a href="{{ url_for('student_dashboard') }}" class="btn-outline">Trang chủ</a>
+        <a href="{{ url_for('events') }}" class="btn-outline">Sự kiện</a>
+
+        <div class="account-menu">
+            <a href="#" class="my-tickets-btn">
+                <i class="fas fa-ticket-alt"></i>
+                Vé của tôi
+            </a>
+            <div class="dropdown-menu">
+                <a href="{{ url_for('my_tickets') }}"><i class="fas fa-ticket-alt"></i> Vé của tôi</a>
+                <a href="{{ url_for('my_profile') }}"><i class="fas fa-user-circle"></i> Tài khoản của tôi</a>
+                <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+            </div>
+        </div>
+        
+        <div class="language-selector">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="VN" class="flag">
+            <span class="arrow">&#9662;</span>
+        </div>
+    </div>
+</header>
+
+<main class="main-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="events-title">
+        <h2>Sự kiện đang diễn ra</h2>
+    </div>
+<div class="events-gallery">
+    {% for event in events %}
+        <div class="event-image">
+            <a href="{{ url_for('event_detail', event_id=event.id) }}">
+                <img src="{{ event.image_url or 'https://via.placeholder.com/300x200' }}" alt="{{ event.name }}">
+            </a>
+        </div>
+    {% endfor %}
+</div>
+</main>
+
+<footer class="event-contact">
+    <div class="contact-container">
+        <div class="contact-info">
+            <h3>📞 Thông tin liên hệ nhà cung cấp sự kiện</h3>
+            <p><strong>Tên đơn vị:</strong> DNU Event Management</p>
+            <p><strong>Điện thoại:</strong> <a href="tel:0961595599">096 159 55 99</a></p>
+            <p><strong>Email:</strong> <a href="mailto:dnu@dainam.edu.vn">dnu@dainam.edu.vn</a></p>
+            <p><strong>Địa chỉ:</strong>Số 1 Phố Xốm, Phú Lãm, Hà Đông, Hà Nội, Hanoi, Vietnam</p>
+        </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/DAINAM.EDU.VN" class="facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/daihocdainam/" class="instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@dainamuni" class="tiktok"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

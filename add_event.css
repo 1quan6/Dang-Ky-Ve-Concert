@@ -1,0 +1,222 @@
+/* General body styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Centering the form container */
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Styling the logo */
+.logo {
+    display: block !important;
+    margin: 0 auto 20px auto;
+    max-width: 120px; /* Consistent with qr_result.css */
+    height: auto;
+}
+
+/* Styling the heading */
+.form-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Styling form inputs, textarea, and file input */
+.form-container input[type="text"],
+.form-container input[type="date"],
+.form-container input[type="number"],
+.form-container input[type="file"],
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-container input[type="text"]:focus,
+.form-container input[type="date"]:focus,
+.form-container input[type="number"]:focus,
+.form-container input[type="file"]:focus,
+.form-container textarea:focus {
+    border-color: #ff6600; /* Matches login.css, register.css */
+}
+
+/* Styling textarea for better height */
+.form-container textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Styling labels */
+.form-container label {
+    font-size: 14px;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+/* Styling the submit button */
+.form-container button {
+    width: 150px; /* Matches shortened button in login.css, register.css */
+    padding: 10px;
+    background-color: #ff6600; /* Matches application theme */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 10px auto;
+}
+
+.form-container button:hover {
+    background-color: #e55c00; /* Matches hover in login.css, register.css */
+}
+
+/* Styling flash messages (for consistency with other pages) */
+.flashes {
+    margin-bottom: 20px;
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+/* Close button for flash messages */
+.alert .close {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.alert .close:hover {
+    opacity: 0.8;
+}
+
+/* Fade-out animation for flash messages */
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+/* Responsive design */
+@media (max-width: 576px) {
+    .form-container {
+        padding: 15px;
+        max-width: 95%;
+    }
+
+    .logo {
+        max-width: 100px; /* Matches qr_result.css */
+    }
+
+    .form-container h2 {
+        font-size: 20px;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="date"],
+    .form-container input[type="number"],
+    .form-container input[type="file"],
+    .form-container textarea {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .form-container textarea {
+        min-height: 80px;
+    }
+
+    .form-container label {
+        font-size: 12px;
+    }
+
+    .form-container button {
+        width: 120px; /* Matches mobile button size in login.css, register.css */
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 360px) {
+    .form-container {
+        padding: 10px;
+    }
+
+    .logo {
+        max-width: 80px; /* Matches qr_result.css for very small screens */
+    }
+
+    .form-container h2 {
+        font-size: 18px;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="date"],
+    .form-container input[type="number"],
+    .form-container input[type="file"],
+    .form-container textarea {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .form-container button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}

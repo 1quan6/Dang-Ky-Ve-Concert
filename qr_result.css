@@ -1,0 +1,229 @@
+/* General body styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Centering the result container */
+.result-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Styling the logo */
+.logo {
+    display: block !important;
+    margin: 0 auto 20px auto;
+    max-width: 120px; /* Smaller logo size for balance */
+    height: auto;
+}
+
+/* Styling the heading */
+.result-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Styling the ticket status */
+.ticket-status {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.ticket-status.valid {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.ticket-status.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.ticket-status.invalid {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Styling the user info card */
+.user-info-card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.user-info-card h3 {
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.user-info-card p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.user-info-card p strong {
+    color: #333;
+}
+
+/* Styling the message box */
+.message-box {
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 10px 0;
+    opacity: 1;
+    transition: opacity 1s ease-out;
+}
+
+.message-box.fade-out {
+    opacity: 0;
+}
+
+.message-box.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message-box.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.message-box.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Styling buttons */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full width for mobile */
+    max-width: 200px; /* Limit width for larger screens */
+}
+
+.btn.btn-primary {
+    background-color: #ff6600; /* Matches login.css and register.css */
+    color: white;
+}
+
+.btn.btn-primary:hover {
+    background-color: #e55c00; /* Matches login.css and register.css hover */
+}
+
+.btn.btn-secondary {
+    background-color: #6c757d; /* Default secondary color for contrast */
+    color: white;
+}
+
+.btn.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Responsive design */
+@media (max-width: 576px) {
+    .result-container {
+        padding: 15px;
+        max-width: 95%; /* Slightly wider to fit small screens */
+    }
+
+    .logo {
+        max-width: 100px; /* Smaller logo on mobile */
+    }
+
+    .result-container h2 {
+        font-size: 20px;
+    }
+
+    .ticket-status {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .user-info-card {
+        padding: 10px;
+    }
+
+    .user-info-card h3 {
+        font-size: 18px;
+    }
+
+    .user-info-card p {
+        font-size: 14px;
+    }
+
+    .message-box {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 14px;
+        max-width: 100%; /* Full width on mobile */
+    }
+}
+
+@media (max-width: 360px) {
+    .result-container {
+        padding: 10px;
+    }
+
+    .logo {
+        max-width: 80px; /* Even smaller for very small screens */
+    }
+
+    .result-container h2 {
+        font-size: 18px;
+    }
+
+    .ticket-status {
+        font-size: 14px;
+    }
+
+    .user-info-card h3 {
+        font-size: 16px;
+    }
+
+    .user-info-card p {
+        font-size: 12px;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}

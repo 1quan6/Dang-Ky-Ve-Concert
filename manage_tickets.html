@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Quản Lý Vé{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mb-4">Quản Lý Vé</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID Vé</th>
+                <th>Tên Sự Kiện</th>
+                <th>Người Dùng</th>
+                <th>Trạng Thái</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.event.name }}</td>
+                <td>{{ ticket.user.fullname if ticket.user else 'Không xác định' }}</td>
+                <td>
+                    {% if ticket.is_used %}
+                        <span class="badge bg-success">Đã sử dụng</span>
+                    {% else %}
+                        <span class="badge bg-info">Chưa sử dụng</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <form action="{{ url_for('edit_ticket', ticket_id=ticket.id) }}" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-info">Chỉnh sửa</button>
+                    </form>
+                    <form action="{{ url_for('delete_ticket', ticket_id=ticket.id) }}" method="post" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa vé này? Thao tác này sẽ không thể hoàn tác.');">
+                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">Chưa có vé nào được đăng ký.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Chỉnh Sửa Vé{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Chỉnh Sửa Vé</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_tickets.css') }}">
+    <form method="post" action="">
+        <div class="form-group">
+            <label>ID Vé: {{ ticket.id }}</label>
+        </div>
+        <div class="form-group">
+            <label>Sự kiện: {{ event.name }}</label>
+        </div>
+        <div class="form-group">
+            <label>Người dùng: {{ user.fullname }} ({{ user.username }})</label>
+        </div>
+        <div class="form-group">
+            <label>Mã vé: {{ ticket.ticket_code }}</label>
+        </div>
+        <div class="form-group">
+            <label>Trạng thái sử dụng:</label>
+            <input type="checkbox" name="is_used" {% if ticket.is_used %}checked{% endif %}> Đã sử dụng
+        </div>
+        <div class="form-group">
+            <label>Trạng thái duyệt:</label>
+            <input type="checkbox" name="is_approved" {% if ticket.is_approved %}checked{% endif %}> Đã duyệt
+        </div>
+        <div class="form-group">
+            <label>Họ và tên:</label>
+            <input type="text" name="fullname" class="form-control" value="{{ user_info_json.fullname|default('')|safe }}">
+        </div>
+        <div class="form-group">
+            <label>Mã sinh viên:</label>
+            <input type="text" name="student_id" class="form-control" value="{{ user_info_json.student_id|default('')|safe }}">
+        </div>
+        <div class="form-group">
+            <label>Lớp:</label>
+            <input type="text" name="student_class" class="form-control" value="{{ user_info_json.student_class|default('')|safe }}">
+        </div>
+        <div class="form-group">
+            <label>Khoa:</label>
+            <input type="text" name="faculty" class="form-control" value="{{ user_info_json.faculty|default('')|safe }}">
+        </div>
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email" name="email" class="form-control" value="{{ user_info_json.email|default('')|safe }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+        <a href="{{ url_for('manage_tickets') }}" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+{% endblock %}
