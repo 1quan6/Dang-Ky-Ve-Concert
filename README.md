@@ -1,4 +1,4 @@
-# 🎶 Hệ thống Đăng ký Vé Concert cho Sinh viên (Miễn phí)
+# 🎶 Hệ thống Đăng ký Vé Concert cho Sinh viên 
 
 ## 📌 Giới thiệu
 Đề tài xây dựng hệ thống đăng ký vé concert trực tuyến **miễn phí cho sinh viên**, hỗ trợ quản lý bởi **Đoàn trường** và **Admin tổng**.  
