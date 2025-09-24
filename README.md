@@ -30,7 +30,7 @@ Hệ thống giúp sinh viên dễ dàng đăng ký vé, hạn chế gian lận 
 
 ---
 
-📝 **Hướng dẫn đăng ký tài khoản sinh viên**
+**📝 Hướng dẫn đăng ký tài khoản sinh viên**
 
 - Truy cập trang chủ hệ thống tại http://localhost:5000.
 - Nhấn vào nút "Đăng ký" (nếu chưa có tài khoản).
@@ -48,7 +48,7 @@ Hệ thống giúp sinh viên dễ dàng đăng ký vé, hạn chế gian lận 
 
 ---
 
-👉 **Đăng ký vé concert**
+ **👉 Đăng ký vé concert**
 
 - Đăng nhập vào hệ thống với tài khoản sinh viên.
 - Vào phần "Sự kiện" để xem danh sách concert hiện có.
